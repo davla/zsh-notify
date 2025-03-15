@@ -7,10 +7,11 @@ Supported terminals
 ---
 
 - On macOS: Terminal.app or [iTerm2][iterm2];
-- On Linux (and possibly other systems): any terminal application should be
-  supported as `xdotool` and `wmctrl` are used to query and modify windows
-  state.
-  
+- On Linux (and possibly other systems): any terminal application on X11 or
+  sway, as long as the necessary tools are installed.
+  + X11: `xdotool` and `wmctrl`.
+  + sway: `jq`.
+
 Setup and usage
 ---
 
@@ -28,7 +29,15 @@ _When using `tmux` on Yosemite:_
 
 #### Linux/Other
 
-Install `notify-send` (default*) -- available in [libnotify][libnotify], `xdotool` and `wmctrl`
+Install `notify-send` (default*) -- available in [libnotify][libnotify].
+
+##### X11
+
+Install `xdotool` and `wmctrl`.
+
+##### sway
+
+Install `jq`.
 
 ---
 
@@ -58,10 +67,10 @@ sourcing `notify.plugin.zsh`.
 
 - Change the notifications icons for failure or success. Provide the path to an
   image, or an URL if you are on macOS.
-        
+
         zstyle ':notify:*' error-icon "/path/to/error-icon.png"
         zstyle ':notify:*' success-icon "/path/to/success-icon.png"
-    
+
     [Try this][dogefy.sh]. Wow.
 
 - Play sounds with error and success notifications when using the built-in
@@ -127,7 +136,7 @@ sourcing `notify.plugin.zsh`.
 
         zstyle ':notify:*' error-log /dev/null
 
-- Force checking of the `WINDOWID` variable on every command:
+- Force checking of the `WINDOWID` variable on every command (only supported on X11 Linux):
 
         zstyle ':notify:*' always-check-active-window yes
 
@@ -135,7 +144,7 @@ sourcing `notify.plugin.zsh`.
 
         zstyle ':notify:*' check-focus no
 
-[terminal-notifier]: https://github.com/alloy/terminal-notifier 
+[terminal-notifier]: https://github.com/alloy/terminal-notifier
 [libnotify]: https://github.com/GNOME/libnotify
 [iterm2]: http://www.iterm2.com/
 [dogefy.sh]: https://gist.github.com/marzocchi/14c47a49643389029a2026b4d4fec7ae
