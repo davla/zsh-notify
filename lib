@@ -37,7 +37,7 @@ function notification-title {
     type="$1"
     shift
 
-    zstyle -s ':notify:' "$type"-title title 
+    zstyle -s ':notify:' "$type"-title title
 
     while [[ $# -gt 0 ]]; do
       k="$1"

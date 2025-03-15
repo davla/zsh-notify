@@ -1,0 +1,21 @@
+# vim: set nowrap filetype=zsh:
+#
+# sway implementation of window-manager functions for Linux.
+
+function get-focused-window-id() {
+    swaymsg --type get_tree --raw | jq --raw-output '.. | select(.focused?).id'
+}
+
+function activate-window() {
+    swaymsg --quiet "[con_id=$1] focus"
+}
+
+function make-window-urgent() {
+    swaymsg --quiet "[con_id=$1] urgent enable"
+}
+
+# Even when $WINDOWID is set, it's not used by any means in sway. Hence, we
+# have to query the focused window ID.
+function get-terminal-window-id() {
+    get-focused-window-id
+}
