@@ -71,7 +71,7 @@
 }
 
 @test 'zsh-notify - notify-send' {
-  if ! command -v xdotool 1>/dev/null 2>/dev/null; then
+  if [[ "$DISPLAY" == '' ]] && [[ "$WAYLAND_DISPLAY" == '' ]]; then
     skip 'must be run on linux'
   fi
 

@@ -1,0 +1,32 @@
+#!/usr/bin/env zunit
+
+@setup {
+  load ../notify.plugin.zsh
+
+  if ! command -v swaymsg 1>/dev/null 2>/dev/null; then
+    skip 'must be run on sway'
+  fi
+}
+
+@teardown {
+}
+
+@test 'xterm: is-terminal-active - yes' {
+  store-window-id
+  run is-terminal-active
+
+  assert $state equals 0
+}
+
+@test 'xterm: is-terminal-active - no' {
+  store-window-id
+
+  local focused_wid
+  focused_wid="$(get-focused-window-id)"
+  swaymsg "[con_id=$focused_wid] move workspace next"
+  run is-terminal-active
+  local is_active=$state
+  swaymsg "[con_id=$focused_wid] move workspace current, focus"
+
+  assert $is_active equals 1
+}
