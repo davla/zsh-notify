@@ -75,9 +75,10 @@
     skip 'must be run on linux'
   fi
 
-  run zsh-notify success 3  <<<"notification text"
+  store-window-id
+  run zsh-notify success 3 <<<"application-name notification text"
 
   assert $state equals 0
-  assert "$(get-args)" same_as "#win (in 3s) notification text"
+  assert "$(get-args)" same_as "-a application-name -t 0 #win (in 3s) -- notification text"
   assert "$(get-stdin)" same_as ""
 }
